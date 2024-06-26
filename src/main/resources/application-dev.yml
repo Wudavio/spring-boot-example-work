@@ -1,0 +1,64 @@
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:redis_password}
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 驅動程序的全限定類名
+
+    # JDBC 連接字串，包含資料庫的主機名、端口號和 schema 名稱
+    # ${host} - 資料庫服務器的主機名
+    # ${port} - 資料庫服務器的端口號
+    # ${schema} - 要連接的資料庫名稱
+    url: jdbc:mysql://${host}:${port}/${schema}?useUnicode=true&characterEncoding=utf-8
+
+    # 資料庫連接的用戶名
+    username: ${username}  # 修改為實際運行的資料庫用戶名
+
+    # 資料庫連接的密碼
+    password: ${password}  # 修改為實際運行的資料庫密碼
+
+  servlet:
+    multipart:
+      max-file-size: 10MB  # 設置上傳文件的最大大小為 10MB
+      max-request-size: 10MB  # 設置單個請求的最大大小為 10MB
+
+  jackson:
+    time-zone: GMT+8  # 設置 JSON 解析時使用的時區為 GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss  # 設置 JSON 日期格式為 "yyyy-MM-dd HH:mm:ss"
+
+  jpa:
+    show-sql: false  # 禁用 SQL 語句的日誌輸出
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect  # 根據 MySQL 版本選擇合適的 Hibernate 方言
+
+server:
+  port: ${SPRING_BOOT_SERVER_PORT:8080}  # 設置應用服務的端口號，默認為 8088
+  forward-headers-strategy: framework  # 設置頭信息轉發策略為框架
+  # use-forward-headers: true  # 允許使用轉發的頭信息
+  servlet:
+    context-path: /api/v1 # 設置上下文路徑為 /api/v1
+  error:
+    whitelabel:
+        enabled: false
+    path: /error # 設置錯誤路徑為 /error
+    include-stacktrace: never  # 當發生錯誤時，不包括迭代與追蹤日誌
+    include-message: always  # 當發生錯誤時，總是包含錯誤信息
+
+springdoc:
+  swagger-ui:
+    enabled: true  # 啟用 Swagger UI
+    path: /swagger-ui.html  # 設置 Swagger UI 的訪問路徑為 /swagger-ui.html
+    persistAuthorization: true  # 持久化授權
+  api-docs:
+    path: /v1/api-docs  # 設置 API 文檔的訪問路徑為 /v3/api-docs
